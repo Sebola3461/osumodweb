@@ -1,0 +1,562 @@
+div.queue-selector {
+    margin: 7px;
+    border-radius: 5px;
+    width: 230px;
+    height: 78px;
+    background-color: hsl(var(--hsl-b3));
+    box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border linear 80ms;
+}
+
+div.queue-selector .status {
+    width: 4px;
+    height: 60px;
+    border-radius: 4rem;
+    margin-left: 8px;
+}
+
+div.queue-selector .status.open {
+    background: hsl(var(--hsl-lime-2));
+}
+
+div.queue-selector .status.closed {
+    background: hsl(var(--hsl-red-2));
+}
+
+div.queue-selector:hover {
+    border: 1px solid hsl(var(--hsl-l1));
+}
+
+div.queue-selector .pfp-container {
+    height: max-content;
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: flex-start;
+    align-self: flex-start;
+    margin: 2%;
+}
+
+div.queue-selector .pfp-container .image {
+    width: 60px;
+    height: 60px;
+    margin: 7%;
+    background-image: url("https://a.ppy.sh/15821708");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
+
+div.queue-selector .info {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+div.queue-selector .info .username {
+    margin-top: 7%;
+    color: hsl(var(--hsl-c1));
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 19px;
+}
+
+div.queue-selector .info .tag {
+    background-color: hsl(var(--hsl-l1));
+    color: hsl(var(--hsl-b6));
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 10px;
+    padding: 0 5px;
+    border-radius: 4rem;
+}
+
+div.queue-selector .info .modes {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.queue-selector .info .modes mode-icon {
+    width: 15px;
+    height: 15px;
+    padding-right: 3px;
+}
+
+div.beatmap-selector {
+    width: calc(100% - 730px);
+    min-height: 130px;
+    max-width: 1000px;
+    margin: 10px 0;
+    background-color: hsl(var(--hsl-b3));
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+    border-left: 5px solid hsl(var(--hsl-orange-1)) !important;
+    cursor: pointer;
+}
+
+div.beatmap-selector:hover {
+    box-shadow: 0 1px 4px rgb(0 0 0 / 65%);
+}
+
+div.beatmap-selector:hover>.banner .overlay {
+    background: rgba(0, 0, 0, 0.65);
+}
+
+div.beatmap-selector .options-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    width: 95%;
+    height: 20px;
+    margin-top: 10px;
+}
+
+div.beatmap-selector .options-bar .options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+div.beatmap-selector .banner .overlay {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 3px;
+    transition: 80ms linear;
+    padding-bottom: 10px;
+}
+
+.overlay .info {
+    width: 100%;
+    height: 14%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.beatmap-status {
+    background-color: hsla(var(--hsl-b4), 0.9);
+    padding: 6px 15px;
+    border-radius: 10000px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: hsl(var(--hsl-c1));
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.overlay .info div:first-of-type {
+    margin-left: 5px;
+}
+
+.overlay .info .container {
+    height: 20px;
+    min-width: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3px;
+}
+
+.overlay .info .container p {
+    font-weight: 600;
+    font-size: 12px;
+    color: #fd5 !important;
+    cursor: default;
+}
+
+.overlay .info .container .icon {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    margin-right: 3px;
+}
+
+.overlay .metadata {
+    width: calc(100% - 20px);
+    height: 50%;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 75%);
+}
+
+.metadata .title {
+    font-weight: 600;
+    font-size: 18px;
+    cursor: default;
+}
+
+.metadata .artist {
+    font-size: 12px;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: default;
+}
+
+.metadata .creator {
+    font-size: 12px;
+    cursor: default;
+}
+
+.metadata .creator span {
+    font-weight: 600;
+    color: hsl(var(--hsl-l2));
+    font-size: 12px;
+}
+
+.overlay .metadata div.beatmap-selector .banner .overlay p {
+    color: hsl(var(--hsl-c1));
+    text-shadow: 0 1px 3px rgb(0 0 0 / 75%);
+}
+
+div.beatmap-selector .banner {
+    content: "";
+    width: 100%;
+    height: 100%;
+    min-height: 130px;
+    border-radius: 3px;
+    background: hsl(var(--hsl-b4));
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(https://assets.ppy.sh/beatmaps/1173620/covers/cover.jpg?1622189207);
+    z-index: -100;
+}
+
+.icon.clock {
+    background-image: url("/static/assets/svg/osu-clock.svg");
+}
+
+.icon.bpm {
+    background-image: url("/static/assets/svg/osu-bpm.svg");
+}
+
+.icon.circle {
+    background-image: url("/static/assets/svg/osu-circle.svg");
+}
+
+div.difficulties {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: hsla(var(--hsl-b3), 70%);
+    border-radius: 10px;
+    width: fit-content;
+    max-width: 95%;
+    min-height: 30px;
+    border: 1px solid hsl(var(--hsl-f1));
+    margin-bottom: 5px;
+    min-width: 30px;
+    align-self: flex-start;
+    margin: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0;
+}
+
+div.beatmap-selector .difficulties .icon {
+    margin: 5px;
+    width: 20px;
+    height: 20px;
+    background-image: url(/static/assets/svg/mode-taiko.svg);
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+div.queue-request-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #00000073;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+div.queue-request-overlay>.panel .horizontal-div {
+    width: inherit;
+    height: 540px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+div.queue-request-overlay>.panel .horizontal-div .beatmaps {
+    width: 280px;
+    height: 100%;
+    background: hsl(var(--hsl-b5));
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.queue-request-overlay>.panel .horizontal-div .beatmap-visualizer {
+    width: calc(100% - 280px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.queue-request-overlay>.panel .horizontal-div .beatmap-visualizer .cover {
+    width: 100%;
+    height: 280px;
+    background-size: cover;
+    background-position: 50%;
+    background-color: #221c1f;
+    background-image: url("https://assets.ppy.sh/beatmaps/1394539/covers/card@2x.jpg?1630799348");
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+div.queue-request-overlay>.panel .horizontal-div .beatmap-visualizer .cover .overlay {
+    width: 95%;
+    padding-left: 5%;
+    padding-right: 5%;
+    height: 100%;
+    display: flex;
+    background-color: hsla(var(--hsl-b5), 60%);
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.difficulty-preview p {
+    font-size: 17px;
+    font-weight: 600;
+    padding-right: 5px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 75%);
+}
+
+div.queue-beatmap-container {
+    width: 95%;
+    --global-beatmap-link-pointer-events: auto;
+    --info-bg: linear-gradient(0.25turn, hsl(var(--hsl-b2)), hsla(var(--hsl-b2), 0.8));
+    --menu-bg: hsl(var(--hsl-b3));
+    --menu-container-width: 10px;
+    --main-height: 100%;
+    --panel-height: 90px;
+    --play-width: 90px;
+    --stats-opacity: 0;
+    margin: 10px;
+    background-color: hsl(var(--hsl-b2));
+    border-radius: 10px;
+    font-size: 12px;
+    height: var(--panel-height);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+div.queue-beatmap-container:hover {
+    --info-bg: linear-gradient(0.25turn, hsl(var(--hsl-b4)), hsla(var(--hsl-b4), 0.8));
+    --menu-opacity: 1;
+    --menu-container-width: 30px;
+    --play-bg: hsla(var(--hsl-b6), 0.8);
+    --play-icon-opacity: 1;
+    --stats-opacity: 1;
+}
+
+div.queue-beatmap-container:hover>.thumbnail .overlay {
+    opacity: 1;
+}
+
+div.queue-beatmap-container .thumbnail {
+    width: var(--play-width);
+    flex: none;
+    background-color: hsl(var(--hsl-b4));
+    position: relative;
+    border-radius: 9px 0 0 9px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/static/assets/images/default-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+div.queue-beatmap-container .thumbnail .overlay button {
+    margin-left: 0;
+    width: 12px;
+    height: 12px;
+}
+
+div.queue-beatmap-container .thumbnail .overlay {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background: var(--play-bg);
+    opacity: 0;
+}
+
+div.queue-beatmap-container .metadata {
+    height: 100%;
+    width: 182px;
+    margin-left: -7px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    --menu-bg: hsl(var(--hsl-b3));
+    border-radius: 10px;
+}
+
+div.queue-beatmap-container .metadata .overlay {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background: var(--info-bg);
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+}
+
+div.queue-beatmap-container .metadata {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("/static/assets/images/default-bg.png");
+}
+
+.overlay p {
+    text-shadow: 0 1px 3px rgb(0 0 0 / 75%);
+    font-size: 14px;
+    font-weight: 700;
+    margin-left: 10px;
+    max-width: 162px;
+    white-space: nowrap!important;
+    text-overflow: ellipsis!important;
+    overflow: hidden!important;
+}
+
+.overlay p.song-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.overlay p.artist {
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.overlay .creator {
+    color: hsl(var(--hsl-c2));
+}
+
+.overlay .creator span {
+    color: hsl(var(--hsl-l2));
+}
+
+.overlay .spread {
+    width: 90%;
+    height: 15px;
+    align-self: center;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.overlay .spread .diff {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 5px;
+}
+
+.overlay .spread .diff .displayer {
+    width: 6px;
+    height: 12px;
+    border-radius: 10000px;
+    background: red;
+    margin-left: 2px;
+}

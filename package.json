@@ -1,0 +1,26 @@
+{
+    "name": "osumodweb",
+    "version": "1.0.0",
+    "description": "mod tool for osu",
+    "main": "index.ts",
+    "scripts": {
+        "test": "ts-node ."
+    },
+    "author": "Sebola3461",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.24.0",
+        "colors": "^1.4.0",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "mongoose": "^6.0.12",
+        "querystring": "^0.2.1",
+        "ts-node": "^10.4.0",
+        "web-push": "^3.4.5"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/node": "^16.11.7",
+        "@types/web-push": "^3.3.2"
+    }
+}
