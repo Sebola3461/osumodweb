@@ -478,7 +478,6 @@ div.page-header-nav .notifications-container .icon {
     width: 20px;
     height: 20px;
     filter: drop-shadow(0 0 3px);
-    background-image: url("/static/assets/svg/inbox.svg");
 }
 
 div.page-header-nav .notifications-container p {

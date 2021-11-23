@@ -19,6 +19,7 @@
     <script src="https://unpkg.com/vanilla-context-menu@1.0.0/dist/vanilla-context-menu.js"></script>
     <script src=" https://cdn.rawgit.com/showdownjs/showdown/1.9.1/dist/showdown.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="/static/js/helpers/Beatmaps.js"></script>
     <script src="/static/js/components/QueueSelector.js" defer></script>
     <script src="/static/js/window/updateElements.js" defer></script>
     <script src="/static/js/window/requests.js" defer></script>
@@ -29,6 +30,7 @@
     <script src="/static/js/components/ModeSelect.js" defer></script>
     <script src="/static/js/window/beatmaps.js" defer></script>
     <script src="/static/js/components/StaticBeatmapSelector.js" defer></script>
+    <script src="/static/js/components/jsvg.js" defer></script>
     <title>osu!modweb - {username}</title>
 </head>
 
@@ -56,6 +58,11 @@
                                 <div class="difficulty-preview">
                                     <p class="diffname">You are still in my heart</p>
                                     <p class="star-rating">Star Rating 5.2</p>
+                                    <div class="fav-and-play-container">
+                                        <div class="play">
+                                            <div class="icon"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="right-div"></div>
@@ -77,7 +84,7 @@
                     </div>
                     <div class="profile-container">
                         <div class="notifications-container">
-                            <div class="icon"></div>
+                            <jsvg-icon color="#ffffff" w="20" h="20" class="icon" icon="inbox"></jsvg-icon>
                             <p class="notification-size">0</p>
                         </div>
                         <div class="profile-pic" id="profile-pic" onclick="toggleMenu()">
@@ -86,7 +93,6 @@
                                     <img class="icon" src="/static/assets/svg/profile.svg" />
                                     <p class="username" id="panel-username">Welcome to osu!modweb</p>
                                 </div>
-
                             </div>
                         </div>
                     </div>
