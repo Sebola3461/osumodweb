@@ -1,7 +1,6 @@
 function enablePushNotifications() {
-    let loginData = window.localStorage["login_data"];
-    if (loginData == undefined) return window.alert("Invalid login credentials, try log-in again.");
-    loginData = JSON.parse(loginData)
+    if (window.localStorage["login_data"] == undefined) return window.alert("Invalid login credentials, try log-in again.");
+    let loginData = JSON.parse(window.localStorage["login_data"])
 
     const publicVapidKey = 'BOGn5q4VEeKaVw7mBoMtgBCipLksIk5xrgZOAhpd47VOOdE5I64yYvjpjX4uzXKGcE7g1FStgvqYAXhi8TFZ8tI';
 
