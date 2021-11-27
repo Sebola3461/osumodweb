@@ -27,7 +27,12 @@ export async function validateRefreshToken(req:expressTypes.Request, res:express
         if (req.body["user_id"] == undefined) return res.status(401).send({ code: 401, message: "Missing userId."});
     
         let result = await updateRefreshToken(req.body["user_id"], req.headers["authorization"]);
-        return Promise.resolve(res.status(200).send(result));
+        let user = await getUser(req.body["user_id"]);
+
+        return Promise.resolve(res.status(200).send({
+            result,
+            user
+        }));
     } catch (error) {
         return Promise.resolve(res.status(401).send(error))
     }
