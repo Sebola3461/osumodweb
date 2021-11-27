@@ -1,6 +1,7 @@
 import * as expressTypes from "express";
 import * as database from "./../../database/database"
 import { getUser } from "../../database/functions/users";
+import * as webpush from "web-push";
 
 export async function subscribePushNotifications(req:expressTypes.Request, res:expressTypes.Response) {
     try {
