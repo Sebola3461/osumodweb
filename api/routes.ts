@@ -33,8 +33,6 @@ export default function apiRoutes(app:expressTypes.Application) {
         })
     })
 
-    // KmBYb/B3+av5kbF0caMj
-
     app.get("/api/beatmaps/:user_id",  (req, res) => {
         let token = req.query["token"]?.toString() || "undefined";
 
