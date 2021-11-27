@@ -1,8 +1,5 @@
 function createSession() {
     let loginData = window.localStorage["login_data"]
-    if (loginData == "undefined" | loginData == undefined | "") {
-        return updatePanelToGuest();
-    }
 
     if (loginData != "undefined" | undefined | "") {
         loginData = JSON.parse(loginData);
@@ -20,7 +17,7 @@ function createSession() {
             return r.json()
         }).then((d) => {
             console.log(d)
-            updatePanelToUser(loginData)
+            localStorage["login_data"] = JSON.stringify(d["user"]);
         }).catch(e => {
             console.error(e)
             return logout()
