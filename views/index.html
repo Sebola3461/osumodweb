@@ -5,135 +5,82 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-         :root {
-            --base-hue: 255;
-            --base-hue-deg: 255deg;
-        }
-    </style>
-    <link rel="stylesheet" href="/static/css/index.css">
-    <link rel="stylesheet" href="/static/css/queues.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
-    <script src="/static/js/components/OsuSelect.js" defer></script>
-    <script src="/static/js/components/Icon.js" defer></script>
+    <link rel="stylesheet" href="/static/css/index.css">
     <script src="https://unpkg.com/vanilla-context-menu@1.0.0/dist/vanilla-context-menu.js"></script>
     <script src=" https://cdn.rawgit.com/showdownjs/showdown/1.9.1/dist/showdown.min.js" defer></script>
-    <script src="/static/js/components/QueueSelector.js" defer></script>
-    <script src="/static/js/window/updateElements.js" defer></script>
-    <script src="/static/js/window/requests.js" defer></script>
     <script src="/static/js/session.js" defer></script>
-    <script src="/static/js/functions/sidebarMenu.js" defer></script>
     <script src="/static/js/push.js" defer></script>
-    <script src="/static/js/window/requests.js" defer></script>
-    <script src="/static/js/window/listing.js" defer></script>
-    <script src="/static/js/components/ModeSelect.js" defer></script>
+    <script src="/static/js/helpers/Navbar.js" defer></script>
     <title>osu!modweb - queues</title>
 </head>
 
-<body onload="listQueues()">
-    <div id="loading-bar"></div>
-    <style id="color-rotate-preview"></style>
-    </div>
-    <header>
-        <div class="background">
-            <div class="triangles-header">
-                <div class="page-header-nav">
-                    <div class="icon-container" onclick="window.location = '/'"></div>
-                    <div class="links-container">
-                        <p class="link" active="true">queues</p>
-                        <p class="link">dev</p>
-                    </div>
-                    <div class="profile-container">
-                        <div class="notifications-container">
-                            <div class="icon"></div>
-                            <p class="notification-size">0</p>
-                        </div>
-                        <div class="profile-pic" id="profile-pic" onclick="toggleMenu()">
-                            <div class="pfp-menu" id="profile-menu" active="false">
-                                <div class="user-banner" id="panel-banner">
-                                    <img class="icon" src="/static/assets/svg/profile.svg" />
-                                    <p class="username" id="panel-username">Welcome to osu!modweb</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="page-title">
-                    <div class="wrapper" id="page-title-header">
-                        <div class="title">
-                            <div class="icon queues" id="page-icon"></div>
-                            <p class="name" id="page-title">queue</p>
-                        </div>
-                        <mode-select callback="changeListingMode" default="0"></mode-select>
-                    </div>
-                </div>
+<body>
+    <div class="navbar" id="page-navbar">
+        <div class="navbar-desktop">
+            <div class="logo"></div>
+            <a href="/queues" class="active">Home</a>
+            <a href="/dev">Developers</a>
+            <a href="/community">Community</a>
+        </div>
+        <div class="navbar-mobile">
+            <div class="logo"></div>
+            <a href="javascript:void(0);" class="icon" onclick="toggleNavbarMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+            <div class="vertical">
+                <a href="/" class="active">Home</a>
+                <a href="/dev">Developers</a>
+                <a href="/community">Community</a>
             </div>
         </div>
-    </header>
-    <div class="app">
-        <div class="layout-body">
-            <div class="rowbar">
-                <div class="wrapper">
-                    <osu-select default="0" callback="changeListingBn">
-                        <option value="false">modders</option>
-                        <option value="true">nominators</option>
-                    </osu-select>
-                </div>
+    </div>
+    <div class="warn">This is a beta release, if you find something broken, open an issue <a href="https://github.com/Sebola3461/osumodweb/issues/">here</a></div>
+    <p class="section-title">
+        <i class="fa fa-search"></i> Filters
+    </p>
+    <div class="filter-nav">
+        <div class="option">
+            <p>Modes</p>
+            <select id="filter-mode-select">
+                <option value="osu">osu!</option>
+                <option value="osu">osu!taiko</option>
+                <option value="osu">osu!catch</option>
+                <option value="osu">osu!mania</option>
+            </select>
+        </div>
+        <div class="option">
+            <p>Type</p>
+            <select id="filter-mode-select">
+                <option value="any">All</option>
+                <option value="true">Modders</option>
+                <option value="false">Nominators</option>
+            </select>
+        </div>
+        <div class="option">
+            <p>Status</p>
+            <select id="filter-mode-select">
+                <option value="any">All</option>
+                <option value="true">Open</option>
+                <option value="false">Closed</option>
+            </select>
+        </div>
+        <div class="option">
+            <p>Sort by</p>
+            <select id="filter-mode-select">
+                <option value="osu">Name</option>
+                <option value="osu">Date</option>
+            </select>
+        </div>
+    </div>
+    <div class="block-listing">
+        <div class="queue-selector">
+            <div class="banner"></div>
+            <div class="metadata">
+                <div class="avatar"></div>
+                <p class="title">Sebola's banana queue</p>
             </div>
-            <div class="search-container">
-                <div class="wrapper">
-                    <div class="search-nav">
-                        <div class="decorator">
-                            <input type="text" id="queue-username-search" placeholder="type in keywords...">
-                        </div>
-                        <button onclick="searchQueues()">search</button>
-                    </div>
-                    <div class="tags-modal">
-                        <p>language preference</p>
-                        <select id="queue-language-filter" oninput="changeListingLanguage(this.options[this.selectedIndex].text)">
-                            <option value="any">any</option>
-                            <option value="2">English</option>
-                            <option value="4">Chinese</option>
-                            <option value="7">French</option>
-                            <option value="8">German</option>
-                            <option value="11">Italian</option>
-                            <option value="3">Japanese</option>
-                            <option value="6">Korean</option>
-                            <option value="10">Spanish</option>
-                            <option value="9">Swedish</option>
-                            <option value="12">Russian</option>
-                            <option value="13">Polish</option>
-                            <option value="5">Instrumental</option>
-                            <option value="14">Other</option>
-                        </select>
-                        <p>genre preference</p>
-                        <select name="queue-genre-filter" oninput="changeListingGenre(this.options[this.selectedIndex].text)">
-                            <option value="any">any</option>
-                            <option value="2">Video Game</option>
-                            <option value="3">Anime</option>
-                            <option value="4">Rock</option>
-                            <option value="5">Pop</option>
-                            <option value="6">Other</option>
-                            <option value="7">Novelty</option>
-                            <option value="9">Hip Hop</option>
-                            <option value="10">Electronic</option>
-                            <option value="11">Metal</option>
-                            <option value="12">Classical</option>
-                            <option value="13">Folk</option>
-                            <option value="14">Jazz</option>
-                        </select>
-                        <p>status</p>
-                        <select id="queue-status-filter" oninput="changeListingStatus(this.options[this.selectedIndex].value)">
-                            <option value="any">any</option>
-                            <option value="true">open</option>
-                            <option value="false">closed</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <section class="block-listing" id="queues-listing">
-            </section>
         </div>
     </div>
 </body>

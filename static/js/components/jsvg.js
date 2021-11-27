@@ -9,10 +9,14 @@ class JSVG extends HTMLElement {
         this.style.color = this.color;
         this.style.width = `${this.w}px`;
         this.style.height = `${this.h}px`;
+
         fetch(`/static/assets/svg/${this.icon}.svg`).then(r => {
             return r.text()
         }).then((svg) => {
             this.shadow.innerHTML = svg;
+
+            this.shadow.children[0].style.width = `${this.w}px`;
+            this.shadow.children[0].style.height = `${this.h}px`;
         })
     }
 }
