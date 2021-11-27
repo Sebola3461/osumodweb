@@ -51,7 +51,7 @@ export async function updateRefreshToken(userId:string, authorization:string) {
 
         console.log("[Database]".bgYellow.black + "Done! token updated for %s".bgGreen.black, userId)
     
-        return Promise.resolve({ code:200, message: "Job done!"})
+        return { code:200, message: "Job done!"}
     } catch (error) {
         console.log("[Database]".bgYellow.black + "An error has ocurred when token update process for %s: %s".bgRed.black, userId)
         console.error(error)
