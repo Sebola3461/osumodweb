@@ -1,23 +1,15 @@
 class StaticBeatmapSelector {
     constructor(beatmap) {
         this.map = beatmap;
-        this.html = `<div class="queue-beatmap-container">
-        <div class="thumbnail" style="background-image: url('${this.map.covers["cover@2x"]}');">
-            <div class="overlay">
-                <button class="option play"></button>
+        this.html = `<div class="beatmap-selector" onclick="selectBeatmapToRequest(${this.map.id})" style="background-image: url(${beatmap.covers["cover@2x"]})" map-id="${this.map.id}">
+        <div class="metadata">
+            <p class="title" hoverable="true" hover-text="${beatmap.title}">${beatmap.title}</p>
+            <p class="artist">by ${beatmap.artist}</p>
+            <div class="modes">
+                ${this.getSpread()}
             </div>
         </div>
-        <div class="metadata" style="background-image: url('${this.map.covers["list@2x"]}');">
-            <div class="overlay">
-                <p class="song-title">${this.map.title}</p>
-                <p class="artist">${this.map.artist}</p>
-                <p class="creator">mapped by <span>${this.map.creator}</span></p>
-                <div class="spread">
-                    ${this.getSpread()}
-                </div>
-            </div>
-        </div>
-    </div>`
+    </div>`;
     }
 
     getSpread() {
@@ -43,19 +35,7 @@ class StaticBeatmapSelector {
         function addDiffMode(mode, diffs) {
             let staticDiff = "";
             let difficulties = diffs.sort((a, b) => { return a.difficulty_rating - b.difficulty_rating });
-            staticDiff = staticDiff + `<div class="diff">
-                <mode-icon mode="${mode}" w="12" h="12" color="white"></mode-icon>${getDisplayers()}
-            </div>`;
-
-
-            function getDisplayers() {
-                let _d = "";
-
-                difficulties.forEach(df => {
-                    _d = _d + `<div class="displayer" style="background-color: ${getDifficultySpectrum(df.difficulty_rating)};" aria-label="${df.version} (${df.difficulty_rating} ⭐)" data-balloon-pos="up"></div>`;
-                })
-                return _d;
-            }
+            staticDiff = staticDiff + `<jsvg-icon color="${getDifficultySpectrum(difficulties.pop().difficulty_rating)}" w="15" h="15" icon="mode-${mode}"></jsvg-icon>`;
 
             return staticDiff;
         }

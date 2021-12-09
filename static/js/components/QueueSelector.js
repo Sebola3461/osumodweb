@@ -29,7 +29,7 @@ class QueueSelector {
         let icons = [];
         this.queue_data.modes.forEach(mode => {
             let number = new Number(mode).valueOf()
-            icons.push(`<mode-icon mode="${this.modes[number]}" color="white" w="14" h="14"></mode-icon>`)
+            icons.push(`<jsvg-icon icon="mode-${this.modes[number]}" color="white" w="14" h="14"></mode-icon>`)
         })
         return icons.join("");
     }

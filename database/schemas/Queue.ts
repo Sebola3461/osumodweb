@@ -4,12 +4,25 @@ export default new Schema({
     _id: {
         type: String
     },
+    banner: {
+        type: String,
+        default: "/static/assets/images/genericbg.jpg"
+    },
     name: {
         type: String
     },
     open: {
         type: Boolean,
         default: false
+    },
+    stats: {
+        type:Object,
+        default: {
+            rejected: 0,
+            accepted: 0,
+            finished: 0,
+            pending: 0
+        }
     },
     m4m: {
         type: Boolean,
@@ -27,13 +40,9 @@ export default new Schema({
         type: Array,
         default: [0]
     },
-    hue: {
-        type: Number,
-        default: 200
-    },
     autoclose: {
         type: Object,
-        default: { enable: false, size: 0 }
+        default: { enable: true, size: 5 }
     },
 
     // ? this queue accepts:
@@ -45,9 +54,24 @@ export default new Schema({
         type: Array,
         default: ["English", "Chinese", "French", "German", "Italian", "Japanese", "Korean", "Spanish", "Swedish", "Russian", "Polish", "Instrumental", "Other"]    
     },
+    blacklist: {
+        type: Object,
+        default: {
+            users: [],
+            artists: []
+        }
+    },
     isBn: {
         type: Boolean,
         default: false
+    },
+    country: {
+        type: Object,
+        default: {
+            code: String,
+            name: String,
+            flag_url: String
+        }
     },
     requests: {
         type: Array,

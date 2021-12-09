@@ -20,9 +20,9 @@ export async function getUserToken(token:string):Promise<osuUserToken> {
             },
             data: postData,
         });
-        return Promise.resolve(request.data);
+        return request.data;
     } catch (error:any) {
-        return Promise.resolve(error);
+        throw error;
     }
 }
 
@@ -43,9 +43,9 @@ export async function getNewTokenByRefresh(token:string):Promise<osuUserToken> {
             },
             data: postData,
         });
-        return Promise.resolve(request.data);
+        return request.data;
     } catch (error) {
-        return Promise.reject(error);
+        throw error;
     }
 }
 
@@ -59,9 +59,9 @@ export async function getUserInfo(access_token:string) {
             },
         });
 
-        return Promise.resolve(res.data);
+        return res.data;
     } catch (error) {
-        return Promise.reject(error);
+        throw error;
     }
 }
 
@@ -69,11 +69,11 @@ export async function fetchUserBeatmaps(user_id:string) {
     try {
         let user:modwebUser = await database.users.findOne({ _id: user_id });
 
-        if (user == null) return Promise.reject({ code: 404, message: "User not found!" })        
+        if (user == null) throw { cod: 404, message: "User not found!" }
 
         const res:AxiosResponse<osuApiBeatmaps> = await axios({
             method: 'GET',
-            url: `https://osu.ppy.sh/api/v2/users/${user_id}/beatmapsets/pending?limit=20`,
+            url: `https://osu.ppy.sh/api/v2/users/${user_id}/beatmapsets/graveyard?limit=20`,
             headers: {
                 Authorization: `Bearer ${user["access_token"]}`,
             },
@@ -93,8 +93,23 @@ export async function fetchUserBeatmaps(user_id:string) {
             formattedObjects.push(response.data)
         }
 
-        return Promise.resolve(formattedObjects);
+        return formattedObjects;
     } catch (error) {
-        return Promise.reject(error);
+        throw error;
+    }
+}
+
+export async function getBeatmap(access_token:string, map_id:string) {
+    try {
+        let response = await axios({
+            method: 'GET',
+            url: `https://osu.ppy.sh/api/v2/beatmapsets/${map_id}`,
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+        });
+        return response.data;
+    } catch(e) {
+        throw e;
     }
 }

@@ -15,6 +15,7 @@
         "express": "^4.17.1",
         "mongoose": "^6.0.12",
         "querystring": "^0.2.1",
+        "socket.io": "^4.4.0",
         "ts-node": "^10.4.0",
         "web-push": "^3.4.5"
     },

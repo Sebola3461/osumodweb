@@ -1,20 +1,19 @@
 import * as expressTypes from "express";
 import bodyParser from "body-parser";
-import { validateRefreshToken, validateUser } from "./functions/auth";
-import { getUser, getUserBeatmaps, listQueues, searchQueues } from "./functions/public";
+import { refreshUser, validateUser } from "./functions/auth";
+import { getUser, getUserBeatmaps, getUserNotifications, listQueues, lookupWebsite, processNotification } from "./functions/public";
 import webpush from "web-push";
 import { subscribePushNotifications } from "./functions/push";
-import { createQueue } from "./functions/queues";
+import { createQueue, requestBeatmapToQueue, updateQueueConfig, updateRequest } from "./functions/queues";
 import { getQueue } from "../database/functions/queues";
 webpush.setVapidDetails(`mailto:${process.env.NOTIFICATIONS_MAIL}`, `${process.env.NOTIFICATIONS_PUBLIC_KEY}`, `${process.env.NOTIFICATIONS_PRIVATE_KEY}`);
 
-export default function apiRoutes(app:expressTypes.Application) {
-    app.get("/api/validate/",  (req, res) => {
-        validateUser(req.query["code"]?.toString() || "undefined", res)
-    })
+import * as io from "socket.io";
+import { updateUserPushScopes } from "./functions/users";
 
+export default function apiRoutes(app:expressTypes.Application) {
     app.post("/api/refresh_token", bodyParser.json(), (req, res) => {
-        validateRefreshToken(req, res)
+        refreshUser(req, res)
     })
 
     app.get("/api/users/:user_id",  (req, res) => {
@@ -23,6 +22,21 @@ export default function apiRoutes(app:expressTypes.Application) {
         }).catch(e => {
             res.status(404).send(e)
         })
+    })
+    app.post("/api/update/user/push", bodyParser.json(),  (req, res) => {
+        updateUserPushScopes(req, res)
+    })
+
+    app.post("/api/update/queue/settings", bodyParser.json(),  (req, res) => {
+        updateQueueConfig(req, res)
+    })
+
+    app.post("/api/update/queue/request/", bodyParser.json(),  (req, res) => {
+        updateRequest(req, res)
+    })
+
+    app.post("/api/queue/request/", bodyParser.json(),  (req, res) => {
+        requestBeatmapToQueue(req, res)
     })
 
     app.get("/api/queue/:queue_id",  (req, res) => {
@@ -47,6 +61,20 @@ export default function apiRoutes(app:expressTypes.Application) {
         subscribePushNotifications(req, res)
     })
 
+    app.get("/api/notifications/:user_id/:notification_id/", (req,res) => {
+        let token = req.query["token"]?.toString() || "undefined";
+        processNotification(req.params["user_id"], req.params["notification_id"], token, res)
+    })
+
+    app.get("/api/notifications/:user_id", (req,res) => {
+        let token = req.query["token"]?.toString() || "undefined";
+        getUserNotifications(req.params["user_id"], token).then(r => {
+            res.send(r)
+        }).catch(e => {
+            res.send(e)
+        })
+    })
+
     app.post("/api/createqueue", bodyParser.json(), (req, res) => {
         createQueue(req, res)
     })
@@ -55,8 +83,9 @@ export default function apiRoutes(app:expressTypes.Application) {
         listQueues(req, res)
     })
 
-    app.get("/api/search/", (req,res) => {
-        searchQueues(req, res)
+    app.get("/api/validate", (req, res) => {
+        let token:string = req.query["code"]?.toString() || "undefined";
+        validateUser(token, res)
     })
 
     console.log("[Api]".bgYellow.black + "Running!".bgGreen.black)

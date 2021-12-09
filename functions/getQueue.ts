@@ -18,6 +18,8 @@ export async function getQueuePage(user:string) {
     
         let queue = await database.queues.findOne(query);
 
+        if (queue == null) throw { code: 404, message: "Queue not found!"}
+
         // ? Send formatted html with user data
         async function formatHTML() {
             let html = readFileSync(__dirname.concat("/../views/queue.html"), "utf8")
@@ -27,8 +29,8 @@ export async function getQueuePage(user:string) {
 
         let html = await formatHTML()
     
-        return Promise.resolve(html)
+        return html
     } catch (error) {
-        return Promise.reject(error)
+        throw error
     }
 }

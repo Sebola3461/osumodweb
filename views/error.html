@@ -7,28 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+    <link rel="stylesheet" href="/static/css/queue.css">
     <link rel="stylesheet" href="/static/css/index.css">
     <script src="https://unpkg.com/vanilla-context-menu@1.0.0/dist/vanilla-context-menu.js"></script>
     <script src=" https://cdn.rawgit.com/showdownjs/showdown/1.9.1/dist/showdown.min.js" defer></script>
-    <script src="/static/js/helpers/classes/QueueSelector.js" defer></script>
-    <script src="/static/js/components/jsvg.js" defer></script>
     <script src="/static/js/helpers/Header.js" defer></script>
     <script src="/static/js/helpers/FloatBox.js" defer></script>
     <script src="/static/js/push.js" defer></script>
     <script src="/static/js/helpers/Navbar.js" defer></script>
-    <script src="/static/js/helpers/Listing.js" defer></script>
     <script src="/static/js/helpers/InputListeners.js" defer></script>
     <script src="/static/js/helpers/Notifications.js" defer></script>
-    <script src="/static/js/helpers/Requests.js" defer></script>
     <script src="/static/js/session.js" defer></script>
-    <title>osu!modweb - queues</title>
+    <title>osu!modweb - User</title>
 </head>
 
 <body>
     <div class="navbar" id="page-navbar">
         <div class="navbar-desktop">
             <div class="logo"></div>
-            <a href="/" class="active" hoverable="true" hover-text="Go to home page">Home</a>
+            <a href="/" hoverable="true" hover-text="Go to home page">Home</a>
             <a href="https://github.com/Sebola3461/osumodweb/" hoverable="true" hover-text="Github repository">Developers</a>
             <a href="/community" hoverable="true" hover-text="Community Discord server">Community</a>
             <div class="search-element">
@@ -49,12 +46,17 @@
                     <div class="nav-panel" id="profile-nav-menu">
                         <div class="banner" id="nav-panel-banner">
                             <div class="overlay">
+                                <p>Guest</p>
                             </div>
                         </div>
                         <div class="options">
                             <div class="option" onclick="goToOwnQueue()">
                                 <i class="fa fa-user"></i>
-                                <p class="menu-queue-action">Your Queue</p>
+                                <p>Your Queue</p>
+                            </div>
+                            <div class="option">
+                                <i class="fa fa-list"></i>
+                                <p>Your Requests</p>
                             </div>
                             <div class="option" onclick="window.location.pathname = '/settings'">
                                 <i class="fa fa-tools"></i>
@@ -89,12 +91,17 @@
                     <div class="nav-panel profile mobile" id="profile-nav-menu">
                         <div class="banner" id="nav-panel-banner">
                             <div class="overlay">
+                                <p>Guest</p>
                             </div>
                         </div>
                         <div class="options">
                             <div class="option" onclick="goToOwnQueue()">
                                 <i class="fa fa-user"></i>
-                                <p class="menu-queue-action">Your Queue</p>
+                                <p>Your Queue</p>
+                            </div>
+                            <div class="option">
+                                <i class="fa fa-list"></i>
+                                <p>Your Requests</p>
                             </div>
                             <div class="option" onclick="window.location.pathname = '/settings'">
                                 <i class="fa fa-tools"></i>
@@ -112,86 +119,16 @@
                 <i class="fa fa-bars"></i>
             </a>
             <div class="vertical">
-                <a href="/" class="active">Home</a>
+                <a href="/">Home</a>
                 <a href="https://github.com/Sebola3461/osumodweb/">Developers</a>
                 <a href="/community">Community</a>
             </div>
         </div>
     </div>
-    <div class="warn">This is a beta release, if you find something broken, open an issue <a href="https://github.com/Sebola3461/osumodweb/issues/" hoverable="true" hover-text="(You will be redirected)">here</a></div>
-    <p class="section-title">
-        <i class="fa fa-list"></i>Modding queues
-    </p>
-    <div class="filter-nav">
-        <div class="option">
-            <p>Modes</p>
-            <select id="filter-modes-select" oninput="updateSearchOption('modes', this.value)">
-                    <option value="any">All</option>
-                    <option value="0">osu!</option>
-                    <option value="1">osu!taiko</option>
-                    <option value="2">osu!catch</option>
-                    <option value="3">osu!mania</option>
-                </select>
-        </div>
-        <div class="option">
-            <p>Type</p>
-            <select id="filter-isBn-select" oninput="updateSearchOption('isBn', this.value)">
-                    <option value="any">All</option>
-                    <option value="false">Modders</option>
-                    <option value="true">Nominators</option>
-                </select>
-        </div>
-        <div class="option">
-            <p>Status</p>
-            <select id="filter-open-select" oninput="updateSearchOption('open', this.value)">
-                    <option value="any">All</option>
-                    <option value="true">Open</option>
-                    <option value="false">Closed</option>
-                </select>
-        </div>
-        <div class="option">
-            <p>Language</p>
-            <select id="filter-languages-select" hoverable="true" hover-text="(Beatmap song language)" oninput="updateSearchOption('languages', this.value)">
-                    <option value="any">All</option>
-                    <option value="English">English</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="French">French</option>
-                    <option value="German">German</option>
-                    <option value="Italian">Italian</option>
-                    <option value="Japanese">Japanese</option>
-                    <option value="Korean">Korean</option>
-                    <option value="Spanish">Spanish</option>
-                    <option value="Swedish">Swedish</option>
-                    <option value="Russian">Russian</option>
-                    <option value="Polish">Polish</option>
-                    <option value="Instrumental">Instrumental</option>
-                    <option value="Other">Other</option>
-                </select>
-        </div>
-        <div class="option">
-            <p>Genre</p>
-            <select id="filter-genres-select" hoverable="true" hover-text="(Beatmap song genre)" oninput="updateSearchOption('genre', this.value)">
-                    <option value="any">All</option>
-                    <option value="Video Game">Video Game</option>
-                    <option value="Anime">Anime</option>
-                    <option value="Rock">Rock</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Other">Other</option>
-                    <option value="Novelty">Novelty</option>
-                    <option value="Hip Hop">Hip Hop</option>
-                    <option value="Electronic">Electronic</option>
-                    <option value="Metal">Metal</option>
-                    <option value="Classical">Classical</option>
-                    <option value="Folk">Folk</option>
-                    <option value="Jazz">Jazz</option>
-                </select>
-        </div>
+    <div class="error-modal">
+        <p id="error-code">{{code}}</p>
+        <p id="text">{{message}}</p>
     </div>
-    <div class="warn-float-box">
-        <i class="fa"></i>
-        <p></p>
-    </div>
-    <div class="block-listing" id="queues-listing"></div>
     <div class="float-box-modal">
         <div class="float-box" id="float-box"></div>
     </div>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+    <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <link rel="stylesheet" href="/static/css/queue.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" referrerpolicy="no-referrer" defer></script>
+    <script src="https://unpkg.com/vanilla-context-menu@1.0.0/dist/vanilla-context-menu.js"></script>
+    <script src=" https://cdn.rawgit.com/showdownjs/showdown/1.9.1/dist/showdown.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="/static/js/helpers/Animations.js" defer></script>
+    <script src="/static/js/components/StaticBeatmapSelector.js" defer></script>
+    <script src="/static/js/helpers/classes/QueueSelector.js" defer></script>
+    <script src="/static/js/helpers/classes/RequestSelector.js" defer></script>
+    <script src="/static/js/helpers/Panels.js" defer></script>
+    <script src="/static/js/helpers/Beatmaps.js" defer></script>
+    <script src="/static/js/helpers/BeatmapPreview.js" defer></script>
+    <script src="/static/js/components/jsvg.js" defer></script>
+    <script src="/static/js/helpers/Header.js" defer></script>
+    <script src="/static/js/helpers/FloatBox.js" defer></script>
+    <script src="/static/js/helpers/Listing.js" defer></script>
+    <script src="/static/js/helpers/Meta.js" defer></script>
+    <script src="/static/js/push.js" defer></script>
+    <script src="/static/js/helpers/Navbar.js" defer></script>
+    <script src="/static/js/helpers/InputListeners.js" defer></script>
+    <script src="/static/js/helpers/Notifications.js" defer></script>
+    <script src="/static/js/session.js" defer></script>
+    <script src="/static/js/helpers/Requests.js" defer></script>
+    <title>osu!modweb - User</title>
+</head>
+
+<body onload="filterQueueRequests(true)">
+    <div class="navbar" id="page-navbar">
+        <div class="navbar-desktop">
+            <div class="logo"></div>
+            <a href="/" hoverable="true" hover-text="Go to home page">Home</a>
+            <a href="https://github.com/Sebola3461/osumodweb/" hoverable="true" hover-text="Github repository">Developers</a>
+            <a href="/community" hoverable="true" hover-text="Community Discord server">Community</a>
+            <div class="search-element">
+                <input type="text" id="filter-name-select" hoverable="true" hover-text="Type the full username. Its cAsE sEnSiTiVe">
+                <i class="fa fa-search" hoverable="true" hover-text="Search queues" id="search-button"></i>
+            </div>
+            <div class="right-controls">
+                <p id="loading-nav-warn">loading...</p>
+                <i class="notifications-icon fa fa-bell" onclick="toggleNotificationMenu()" id="nav-notifications-button">
+                    <div>
+                        <div class="nav-panel" id="notification-nav-menu">
+                            <p class="warn">nothing here, or genjuro is gay...</p>
+                        </div>
+                    </div>
+                </i>
+                <button id="nav-login-button" onclick="startLoginProcess()">Login</button>
+                <div class="profile-icon" onclick="toggleProfileMenu(event)" id="nav-profile-icon">
+                    <div class="nav-panel" id="profile-nav-menu">
+                        <div class="banner" id="nav-panel-banner">
+                            <div class="overlay">
+                                <p>Guest</p>
+                            </div>
+                        </div>
+                        <div class="options">
+                            <div class="option" onclick="goToOwnQueue()">
+                                <i class="fa fa-user"></i>
+                                <p>Your Queue</p>
+                            </div>
+                            <div class="option" onclick="window.location.pathname = '/settings'">
+                                <i class="fa fa-tools"></i>
+                                <p>Options</p>
+                            </div>
+                            <div class="option" onclick="logout()">
+                                <i class="fa fa-arrow-left"></i>
+                                <p>Log-out</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-mobile">
+            <div class="logo"></div>
+            <div class="search-element">
+                <input type="text" id="filter-name-select" hoverable="true" hover-text="Type the full username. Its cAsE sEnSiTiVe">
+                <i class="fa fa-search" hoverable="true" hover-text="Search queues" id="search-button"></i>
+            </div>
+            <div class="right-controls">
+                <p id="loading-nav-warn">loading...</p>
+                <i class="notifications-icon fa fa-bell" onclick="toggleNotificationMenuMobile()" id="nav-notifications-button">
+                    <div>
+                        <div class="nav-panel notifications mobile" id="notification-nav-menu">
+                            <p class="warn">nothing here, or genjuro is gay...</p>
+                        </div>
+                    </div>
+                </i>
+                <button id="nav-login-button" onclick="startLoginProcess()">Login</button>
+                <div class="profile-icon" onclick="toggleProfileMenuMobile(event)" id="nav-profile-icon">
+                    <div class="nav-panel profile mobile" id="profile-nav-menu">
+                        <div class="banner" id="nav-panel-banner">
+                            <div class="overlay">
+                            </div>
+                        </div>
+                        <div class="options">
+                            <div class="option" onclick="goToOwnQueue()">
+                                <i class="fa fa-user"></i>
+                                <p id="user-queue-panel-text">...</p>
+                            </div>
+                            <div class="option" onclick="window.location.pathname = '/settings'">
+                                <i class="fa fa-tools"></i>
+                                <p>Options</p>
+                            </div>
+                            <div class="option" onclick="logout()">
+                                <i class="fa fa-arrow-left"></i>
+                                <p>Log-out</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="toggleNavbarMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+            <div class="vertical">
+                <a href="/">Home</a>
+                <a href="https://github.com/Sebola3461/osumodweb/">Developers</a>
+                <a href="/community">Community</a>
+            </div>
+        </div>
+    </div>
+    <header class="queue-profile">
+        <div class="queue-banner" id="queue-banner">
+            <div class="overlay">
+                <div class="status open" id="queue-status">...</div>
+                <div class="queue-stats">
+                    <p>Accepted: <span id="accepted-req-size">...</span></p>
+                    <p>Rejected: <span id="rejected-req-size">...</span></p>
+                    <p>Finished: <span id="finished-req-size">...</span></p>
+                    <p>Pending: <span id="pending-req-size">...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="data">
+            <div class="left">
+                <div class="avatar" id="queue-avatar">
+                    <p class="title" id="queue-name">...</p>
+                    <div class="flag">
+                        <div class="image" id="queue-flag-image"></div>
+                        <p id="queue-flag-name">...</p>
+                    </div>
+                </div>
+                <div class="tag-type" id="queue-type">...</div>
+            </div>
+            <div class="meta">
+                <div class="horizontal">
+                    <div class="text" id="queue-rules-desktop"></div>
+                    <div class="queue-buttons" id="queue-buttons">
+                        <button onclick="toggleCreateRequestOverlay()" disabled="true" id="queue-header-request-button">Log-in to request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="text mobile" id="queue-rules-mobile"></div>
+    <p class="section-title requests" id="queue-request-label-title">
+        <i class="fa fa-list"></i>... Requests
+    </p>
+    <div class="page-area">
+        <div class="option area" active="true" onclick="selectPageArea(this);filterQueueRequests(true)" hoverable="true" hover-text="Display <strong>only</strong> Pending and Accepted requests">
+            In progress
+        </div>
+        <div class="option area" onclick="selectPageArea(this);filterQueueRequests(false)" hoverable="true" hover-text="Display <strong>only</strong> Rejected and Finished requests">
+            Archived
+        </div>
+        <div class="option">
+            <select oninput="changeQueueRequestsSort(this.value)" hoverable="true" hover-text="Sort requests by:">
+                <option value="date">Date</option>
+                <option value="title">Title</option>
+            </select>
+        </div>
+        <div class="option">
+            <select oninput="changeQueueRequestsMode(this.value)" hoverable="true" hover-text="Request mode:">
+                <option value="any">All</option>
+                <option value="osu">osu!</option>
+                <option value="taiko">osu!taiko</option>
+                <option value="fruits">osu!catch</option>
+                <option value="mania">osu!mania</option>
+            </select>
+        </div>
+    </div>
+    <div class="block-listing" id="requests-listing">
+
+    </div>
+    <div class="queue-request-modal" id="queue-request-modal">
+        <div class="panel">
+            <div id="beatmaps-listing">
+                <!-- <div class="search-element">
+                    <input type="text" placeholder="Insert beatmap by URL" hoverable="true" hover-text="Request a beatmap that is not yours. Enter the map URL here and press enter.">
+                </div> -->
+            </div>
+            <div class="vertical">
+                <div id="request-banner"></div>
+                <div class="metadata">
+                    <div id="request-spread"></div>
+                    <p id="request-title">Select a beatmap</p>
+                    <p id="request-artist">...</p>
+                    <textarea id="request-text" placeholder="Describe your request here" oninput="updateRequestComment(this.value)"></textarea>
+                    <div class="request-controls">
+                        <button onclick="toggleCreateRequestOverlay()">Cancel</button>
+                        <button onclick="requestBeatmap(this)">Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="request-visualization-modal" id="queue-request-manager-overlay">
+        <div class="panel">
+            <div class="banner">
+                <div class="overlay"></div>
+            </div>
+            <div class="modding-area">
+                <div class="nav-data">
+                    <div class="spread-container">
+                        <p class="request-date">...</p>
+                        <div class="data">
+                            <div class="spread"></div>
+                            <div class="option">
+                                <i class="fa fa-tachometer-alt"></i>
+                                <p class="bpm">...</p>
+                            </div>
+                            <div class="option">
+                                <i class="fa fa-clock"></i>
+                                <p class="duration">...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vertical-content">
+                    <div class="mapper-comment">
+                        ...
+                    </div>
+                    <p class="section-title2"><i class="fa fa-edit"></i>Manage request</p>
+                    <textarea id="modding-panel-request-res" placeholder="Add a note to request response"></textarea>
+                    <div class="request-actions">
+                        <button class="back" onclick="hideRequestManagerPanel()">back</button>
+                        <button class="rejected">Reject</button>
+                        <button class="accepted">Accept</button>
+                        <button class="finished">Finish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="float-box-modal">
+        <div class="float-box" id="float-box"></div>
+    </div>
+    <div class="music-player">
+        <div class="controls">
+            <button id="music-state" onclick="pausePreview()">
+                <i class="fa fa-pause" id="music-state-icon"></i>
+            </button>
+            <input type="range" id="music-volume" max="1" min="0" step="0.10" value="0.20" oninput="updateBar(this, 'Music volume'); updateVolume(this.value)" hoverable="true" hover-text="Song volume">
+        </div>
+        <input type="range" id="music-position" max="100" min="0" step="0.01" value="0.00" hoverable="true" hover-text="Song position (0%)" oninput="updateBar(this, 'Song position');changePreviewPosition(event.target.value)">
+    </div>
+    <div class="confirm-overlay-warn" id="generic-warn">
+        <div class="panel" id="generic-warn-panel">
+            <p class="title">Hey, take care!</p>
+            <p>Are you sure? Confirm bellow to continue, or cancel if you want.</p>
+            <div class="buttons">
+                <button class="finished">nevermind</button>
+                <button class="accepted">ya, go ahead</button>
+            </div>
+        </div>
+    </div>
+    <div class="warn-float-box">
+        <i class="fa"></i>
+        <p></p>
+    </div>
+    <audio src="" id="preview-audio"></audio>
+</body>
+
+</html>

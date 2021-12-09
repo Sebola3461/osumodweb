@@ -1,0 +1,167 @@
+body {
+    --display-queue-options: none;
+}
+
+div.layout-wrapper {
+    --splash-display: block;
+    width: 100%;
+    min-height: 70vh;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.layout-wrapper::after {
+    content: "";
+    width: inherit;
+    height: 100vh;
+    background: var(--background1);
+    position: fixed;
+    display: var(--splash-display);
+    z-index: 99;
+    background-image: url(/static/assets/images/loading.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 5%;
+}
+
+div.layout-wrapper .options-selector {
+    width: 20%;
+    max-width: 300px;
+    height: 80vh;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: var(--background2);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+}
+
+div.layout-wrapper .options-selector .option {
+    width: 50%;
+    margin-top: 10px;
+    padding: 2% 20%;
+    height: 50px;
+    border-bottom: 1px solid var(--background3);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    cursor: pointer;
+}
+
+.option.queue-option {
+    display: var(--display-queue-options);
+}
+
+.create-queue-overlay {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+div.layout-wrapper .layout-vertical {
+    margin-top: 10px;
+    height: fit-content;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
+
+div.layout-wrapper .layout-vertical .section-title {
+    width: 95%;
+    margin-left: 5%;
+}
+
+div.layout-wrapper .layout-vertical section.option {
+    width: 90%;
+    margin-top: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid var(--background4);
+}
+
+div.layout-wrapper .layout-vertical section.option select.hidden {
+    opacity: 0;
+}
+
+div.layout-wrapper .layout-vertical section.option .option-container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+div.layout-wrapper .layout-vertical section.option .option-container p {
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+div.layout-wrapper .layout-vertical section.option .option-container label {
+    color: #aaa;
+}
+
+div.layout-wrapper .layout-vertical section.option .option-container input,
+select {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px 10px;
+    width: fit-content;
+    height: fit-content;
+}
+
+div.layout-wrapper .layout-vertical section.option .option-container textarea {
+    padding: 3px;
+    width: 100%;
+    resize: none;
+    height: 160px;
+}
+
+div.queue-rules-preview {
+    width: 100%;
+    height: 160px;
+    padding: 0px 2%;
+    margin-top: 5px;
+    background: var(--background2);
+    border-radius: 4px;
+    overflow-y: auto;
+    overflow-x: clip;
+    line-break: anywhere;
+}
+
+div.queue-rules-preview * {
+    max-width: max-content;
+}
+
+div.layout-wrapper .layout-vertical section.option .option-container input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button.save-button {
+    margin: 20px 0px;
+    margin-left: auto;
+    margin-right: 5%;
+    display: block;
+    font-size: 20px;
+}

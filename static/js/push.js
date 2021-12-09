@@ -40,7 +40,7 @@ function enablePushNotifications() {
             },
             body: JSON.stringify({
                 user_id: loginData._id,
-                scopes: ["newQueueRequest", "queueRequestUpdate"],
+                scopes: ["queue:update", "user:update"],
                 subscription: subscription
             })
         });

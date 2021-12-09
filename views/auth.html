@@ -9,13 +9,15 @@
 </head>
 
 <body>
-    Almost done...
+    Almost done... <strong>DONT CLOSE THIS WINDOW!</strong>
     <script>
         fetch(`/api/validate${window.location.search}`).then(r => {
             return r.json()
         }).then(d => {
             window.localStorage["login_data"] = JSON.stringify(d);
             window.close()
+        }).catch(e => {
+            window.alert("Something is wrong. Close this window and try again.")
         })
     </script>
 </body>

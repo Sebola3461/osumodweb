@@ -5,6 +5,7 @@ import "./database/database";
 import * as api from "./api/routes";
 import "colors";
 import { getQueuePage } from "./functions/getQueue";
+import { sendErrorPage } from "./errors";
 const app = express()
 app.use("/static/", express.static(__dirname.concat("/static")))
 
@@ -14,12 +15,17 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname.concat("/views/index.html"))
 })
 
+app.get("/settings", (req, res) => {
+    console.log("[Routes]".bgYellow.black + "A new access has been requested".bgBlue.black)
+    res.sendFile(__dirname.concat("/views/options.html"))
+})
+
 app.get("/queue/:user", (req, res) => {
     console.log("[Routes]".bgYellow.black + "A new queue has been requested".bgBlue.black)
-    getQueuePage(req.params["user"]).then((queue):void => {
+    getQueuePage(req.params["user"]).then((queue) => {
         res.status(200).send(queue);
     }).catch(e => {
-        res.status(500).send(e)
+        res.status(e["code"] || 500 ).send(sendErrorPage(e))
     })
 })
 

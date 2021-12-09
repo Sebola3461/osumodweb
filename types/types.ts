@@ -3,11 +3,14 @@ import { AxiosError } from "axios"
 export type modwebUser = {
     status: number,
     _id: string,
+    banner: string,
     username: string,
     hasQueue: boolean,
     account_token: string,
     access_token: string
     refresh_token: string
+    push: object,
+    notifications: Array<userNotification>,
     osuData: object
 }
 
@@ -23,16 +26,61 @@ export type createQueueRequest = {
   isBn: boolean
 }
 
-type code_grant = {
-    access_token: String,
-    expires_in: Number,
-    refresh_token: String,
-    token_type: string
-}
-
 export type databaseError = {
     code: number,
     message: string
+}
+
+export type userNotification = {
+  id: string, 
+  title: string,
+  body: string, 
+  queue: string,
+  date: Date, 
+  thumbnail: string,
+  redirect: string
+}
+
+export interface userNotificationObject {
+  id: string, 
+  title: string, 
+  date: Date, 
+  thumbnail: string,
+  redirect: string
+}
+
+export type modwebQueue = {
+	_id: string,
+	banner: string,
+	name: string,
+	open: boolean,
+	stats: {
+		rejected: number,
+		accepted: number,
+		finished: number,
+		pending: number
+	},
+	m4m: boolean,
+	cooldown: number
+	rules: string,
+	modes: Array<number>,
+	autoclose: { 
+		enable: false, 
+		size: number
+	},
+	genres: Array<string>, 
+	languages: Array<string>,
+	blacklist: {
+		users: Array<string>,
+		artists: Array<string>
+	},
+	isBn: boolean,
+	country: {
+		code: String,
+		name: String,
+		flag_url: String
+	}
+	requests: Array<queueRequests>
 }
 
 export type osuUserApiResponse = {
@@ -49,6 +97,7 @@ export type osuUserApiResponse = {
     "pm_friends_only": boolean,
     "profile_colour": string,
     "username": string,
+    "safe_username": string,
     "cover_url": string,
     "discord": string,
     "has_supported": boolean,
@@ -159,6 +208,94 @@ export type searchQueueRequest = {
   open: string,
 }
 
+export type osuApiBeatmap = {
+  "artist": string,
+  "artist_unicode": string,
+  "covers": {
+    "cover": string,
+    "cover@2x": string,
+    "card": string,
+    "card@2x": string,
+    "list": string,
+    "list@2x": string,
+    "slimcover": string,
+    "slimcover@2x": string
+  },
+  "creator": string,
+  "favourite_count": number,
+  "genre": {
+    id: number,
+    name: string
+  },
+  "language": {
+    id: number,
+    name: string
+  },
+  "hype": {
+    "current": number,
+    "required": number
+  },
+  "id": number,
+  "nsfw": boolean,
+  "play_count": number,
+  "preview_url": string,
+  "source": string | null,
+  "status": string,
+  "title": string,
+  "title_unicode": string,
+  "track_id": number | null,
+  "user_id": number,
+  "video": boolean,
+  "availability": {
+    "download_disabled": boolean,
+    "more_information": string | null
+  },
+  "bpm": number,
+  "can_be_hyped": boolean,
+  "discussion_enabled": boolean,
+  "discussion_locked": boolean,
+  "is_scoreable": boolean,
+  "last_updated": string,
+  "legacy_thread_url": string,
+  "nominations_summary": {
+    "current": number,
+    "required": number
+  },
+  "ranked": number,
+  "ranked_date": null|string,
+  "storyboard": boolean,
+  "submitted_date": string,
+  "beatmaps": [{
+      "beatmapset_id": number,
+      "difficulty_rating": number,
+      "id": number,
+      "mode": string,
+      "status": string,
+      "total_length": number,
+      "user_id": number,
+      "version": string,
+      "accuracy": number,
+      "ar": number,
+      "bpm": number,
+      "convert": boolean,
+      "count_circles": number,
+      "count_sliders": number,
+      "count_spinners": number,
+      "cs": number,
+      "deleted_at": null,
+      "drain": number,
+      "hit_length": number,
+      "is_scoreable": boolean,
+      "last_updated": string,
+      "mode_int": number,
+      "passcount": number,
+      "playcount": number,
+      "ranked": number,
+      "url": string,
+      "checksum": string
+    }
+  ]
+}
 
 export type osuApiBeatmaps = [
   {
@@ -241,3 +378,29 @@ export type osuApiBeatmaps = [
       }
     ]
   }]
+
+export type beatmapRequest = {
+    user_id: string,
+    queue_id: string
+    beatmap_id: string,
+    comment: string
+}
+
+export type queueAutoclose = {
+  enable: boolean,
+  size: number
+}
+
+export type queueRequests = [{
+  id: string,
+  status: string,
+  date: Date,
+  queue_id?: string,
+  owner: {
+      id: string,
+      username: string
+  },
+  comment: string,
+  reply?: string,
+  beatmap: osuApiBeatmap
+}]
